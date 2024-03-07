@@ -23,53 +23,66 @@ class BrandController extends Controller
      * Show the form to create a new brand.
      */
     public function add()
-{
-         return Inertia::render('Brands/Add');
-}
+    {
+            return Inertia::render('Brands/Add');
+    }
     
-    public function edit($id)
+
+public function save(Request $request)
 {
+    $request->validate([
+        'name' => ['required', 'max:255', 'string'],
+        'description' => ['required', 'string'],
+        'logo' => ['required', 'mimes:jpg,png,jpeg', 'max:2048'], //max:2MB
+    ]);
+    
+    $logoPath = $request->file('logo')->store('public/logos');
+    
+    Brand::create([
+        'name' => $request->name,
+        'description' => $request->description,
+        'path' => str_replace("public", "storage", $logoPath)
+    ]);
+    
+    return redirect()->route('brands')->with('success', 'Brand saved successfully');
+}
+
+public function edit($id)
+    {
         $brand = Brand::find($id);
+
         if($brand){
-            return Inertia::render('Brands/Add' ,[
-                 "brand" => $brand
+            return Inertia::render('Brands/Edit' ,[
+                "brand" => $brand
             ]);
-         }
-         return back();
-}
+        }
 
-    public function save(Request $request)
-{
-        $request->validate([
-            'name' => ['required', 'max:255', 'string'],
-            'description' => ['required', 'string'],
-            // 'brandLogo' => ['required', 'mimes:jpg,png'],
-        ]);
+        return back();
+    }
     
-        // if ($request->hasFile('brandLogo')) {
-        //     $logoPath = $request->file('brandLogo')->store('public/logos');
-        //     $brandData['logo_path'] = str_replace("public", "/storage", $logoPath);
-        // }
-        Brand::updateOrCreate([
-            'id' => $request->id
-        ], [
-            'name' => $request->name,
-            'description' => $request->description,
-            'path' => $request->description,
+    function update(Request $request, $id)
+    {
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:50',
+            'description' => ['required', 'string'],
+            'logo' => ['nullable', 'mimes:jpg,png,jpeg', 'max:2048'], //max:2MB
         ]);
 
-        return redirect()->route('brands')->with('success', 'Brand saved successfully');
+        $brand = Brand::findOrFail($id);
 
-        // Brand::updateOrCreate([
-        //     'id' => $request->id
-        // ], [
-        //     'name' => $request->name,
-        //     'description' => $request->description,
-        //     // 'path' => str_replace("public", "/storage", $path)
-        // ]);
-}
+        $brand->name = $request->name;
+        $brand->description = $request->description;
 
-    public function delete($id)
+        if ($request->hasFile("logo")) {
+            $logoPath = $request->file('logo')->store('public/logos');
+            $brand->path = str_replace("public", "storage", $logoPath);
+        }
+        $brand->save();
+
+        return redirect()->route('brands')->with('success', 'Bran updated successfully'); 
+    }
+
+public function delete($id)
 {
     $brand = Brand::findOrFail($id);
     $brand->delete();

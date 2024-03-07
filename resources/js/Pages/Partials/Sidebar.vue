@@ -7,7 +7,7 @@
             <div class="sidebar-brand-icon rotate-n-15">
                 <i class="fas fa-laugh-wink"></i>
             </div>
-            <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+            <div class="sidebar-brand-text mx-3"> Mobile Repair Shop <sup>Dashboard</sup></div>
         </a>
 
         <!-- Divider -->
@@ -15,9 +15,7 @@
 
         <!-- Nav Item - Dashboard -->
         <li class="nav-item">
-            <Link class="nav-link" href="/dashboard">
-                <i class="fas fa-fw fa-tachometer-alt"></i>
-                <span>Dashboard</span></Link>
+            <Link class="nav-link" href="/dashboard"><i class="fas fa-fw fa-tachometer-alt"></i><span>Dashboard</span></Link>
         </li>
 
         <!-- Divider -->
@@ -29,57 +27,44 @@
         </div>
 
         <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
-                    aria-expanded="true" aria-controls="collapsePages">
-                    <i class="fas fa-fw fa-folder"></i>
-                    <span>Brands</span>
+
+        <li class="nav-item active">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span>Users</span>
                 </a>
-                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar" style="">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Login Screens:</h6>
-                        <Link class="collapse-item" href="/brands/add">Add</Link>
-                        <Link class="collapse-item" href="/brands">List</Link>
-                        <div class="collapse-divider"></div>
+                        <h6 class="collapse-header">Types:</h6>
+                        <Link class="collapse-item active" href="/users/admin"><i class="fas fa-fw fa-tachometer-alt"></i><span>Admin</span></Link>
+                        <Link class="collapse-item" href="/users/agent"><i class="fas fa-fw fa-tachometer-alt"></i><span>Agents</span></Link>
+                        <Link class="collapse-item" href="/users/driver"><i class="fas fa-fw fa-tachometer-alt"></i><span>Driver</span></Link>
+                        <Link class="collapse-item" href="/users/customer"><i class="fas fa-fw fa-tachometer-alt"></i><span>Customer</span></Link>
                     </div>
                 </div>
             </li>
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
-                    aria-expanded="true" aria-controls="collapsePages">
-                    <i class="fas fa-fw fa-folder"></i>
-                    <span>Products</span>
-                </a>
-                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Login Screens:</h6>
-                        <Link class="collapse-item" href="/products/add">Add</Link>
-                        <Link class="collapse-item" href="/products">List</Link>
-                        <div class="collapse-divider"></div>
-                    </div>
-                </div>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages"
-                    aria-expanded="true" aria-controls="collapsePages">
-                    <i class="fas fa-fw fa-folder"></i>
-                    <span>Parts</span>
-                </a>
-                <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Login Screens:</h6>
-                        <Link class="collapse-item" href="/parts/add">Add</Link>
-                        <div class="collapse-divider"></div>
-                    </div>
-                </div>
-            </li>
-            
+        
         <li class="nav-item">
-            <a class="nav-link" href="index.html">
-                <i class="fas fa-fw fa-tachometer-alt"></i>
-                <span>Other Page</span></a>
+            <Link class="nav-link" href="/users"><i class="fas fa-fw fa-tachometer-alt"></i><span>Users</span></Link>
+        </li>
+        <!-- <li class="nav-item">
+            <Link class="nav-link" :href="route('agent.application.list')"><i class="fas fa-fw fa-tachometer-alt"></i><span>Applications</span></Link>
+        </li> -->
+
+        <li class="nav-item">
+            <Link class="nav-link" href="/brands"><i class="fas fa-fw fa-tachometer-alt"></i><span>Brands</span></Link>
+        </li>
+        <li class="nav-item">
+            <Link class="nav-link" href="/products"><i class="fas fa-fw fa-tachometer-alt"></i><span>Products</span></Link>
+        </li>
+        <li class="nav-item">
+            <Link class="nav-link" href="/parts"><i class="fas fa-fw fa-tachometer-alt"></i><span>Parts</span></Link>
         </li>
 
+        <li class="nav-item">
+            <Link class="nav-link" :href="route('agent.orders.index')"><i class="fas fa-fw fa-tachometer-alt"></i><span>Orders</span></Link>
+        </li>
+            
     </ul>
     <!-- End of Sidebar -->
 </template>

@@ -14,11 +14,19 @@ class Product_part extends Model
         'product_id',
         'name',
         'description',
-        'status',
-        'price'
+        'customer_price',
+        'agent_price',
+        'status'
     ];
+
+    public function brand()
+    {
+        return $this->belongsTo(Brand::class);
+    }
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
     
-    protected $appends = [
-        "created_date"
-    ];
 }

@@ -11,12 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('products', function (Blueprint $table) {
+        Schema::create('orders', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id');
             $table->foreignId('brand_id');
-            $table->string('name');
-            $table->text("description")->nullable();
-            $table->enum('status', ['active', 'inactive'])->default('active');
+            $table->foreignId('product_id');
+            $table->text('description')->nullable();
+            $table->decimal('total_amount', 10, 2);
+            $table->enum('status', ['Pending', 'Assigned', 'Processing', 'Shipped', 'Delivered', 'Cancelled'])->default('Pending');
             $table->timestamps();
         });
     }
@@ -26,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('products');
+        Schema::dropIfExists('orders');
     }
 };

@@ -14,19 +14,36 @@ class Product extends Model
         'brand_id',
         'name',
         'description',
+        'path',
         'status'
     ];
-    
-    protected $appends = [
-        'created_date'
-    ];
 
-    public function getCreatedDateAttribute()
+    protected static function boot()
     {
-        return Carbon::parse($this->attributes['created_at'])->toDayDateTimeString();
+        parent::boot();
+
+        static::deleting(function ($product) {
+            $product->product_parts()->delete();
+        });
     }
+    
+
     public function brand()
     {
         return $this->belongsTo(Brand::class);
     }
+    
+    public function product_parts()
+    {
+        return $this->hasMany(Product_part::class);
+    }
+
+    // protected $appends = [
+    //     'created_date'
+    // ];
+
+    // public function getCreatedDateAttribute()
+    // {
+    //     return Carbon::parse($this->attributes['created_at'])->toDayDateTimeString();
+    // }
 }

@@ -5,14 +5,14 @@
 
             <div class="row">
               <div class="col">
-                <h3 class="mb-4">Create Part</h3>
+                <h3 class="mb-4">Edit Part</h3>
               </div>
               <div class="col text-right">
-                <Link class="btn btn-primary" href="/parts">View Products</Link>
+                <Link class="btn btn-primary" href="/parts">Back</Link>
               </div>
             </div>
 
-            <form @submit.prevent="savePart()" class="p-4 card">
+            <form @submit.prevent="updatePart()" class="p-4 card">
                 <div class="form-group">
                     <label for="name">Name</label>
                     <input type="text" v-model="form.name" class="form-control" id="name" placeholder="Enter product name here">
@@ -29,10 +29,9 @@
                     <label for="agent_price">Agent Price</label>
                     <input type="number" v-model="form.agent_price" class="form-control" id="agent_price" placeholder="Enter agent price">
                 </div>
-                
+
                 <div class="form-group">
                     <label for="dropdown">Product</label>
-                    <!-- is the below line correct ? as we getting product object -->
                     <select class="custom-select" id="dropdown" v-model="form.product_id">
                         <option value="" disabled>-- Select Product --</option>
                         <option v-for="option in dropdownOptions" :key="option.id" :value="option.id">
@@ -40,7 +39,8 @@
                         </option>
                     </select>
                 </div>
-                <button type="submit" class="btn btn-primary">Save</button>
+                
+                <button type="submit" class="btn btn-primary">Update</button>
             </form>
         </div>
         <!-- /.container-fluid -->
@@ -61,32 +61,24 @@ export default {
         return {
             dropdownOptions: {},
             form: {
-                id : "", 
-                product_id: "",
-                brand_id: "",
-                name : "", 
-                description : "", 
-                customer_price : "", 
-                agent_price : "", 
+                id: this.$page.props.part.id,
+                product_id: this.$page.props.part.product_id,
+                brand_id: this.$page.props.part.brand_id,
+                name : (this.$page.props.part && this.$page.props.part.name), 
+                description : (this.$page.props.part && this.$page.props.part.description), 
+                customer_price : (this.$page.props.part && this.$page.props.part.customer_price),
+                agent_price : (this.$page.props.part && this.$page.props.part.agent_price),
             },
         }
     },
 
     methods: {
-    savePart() {
-      this.$inertia.post(route("parts.save"), this.form);
+    updatePart() {
+      this.$inertia.post(route("parts.update", { id: this.$page.props.part.id }), this.form);
     },
   },
     mounted() {
         this.dropdownOptions = this.$page.props.dropdownOptions;
     },
-    watch: {
-    'form.product_id': function(newVal, oldVal) {
-      const selectedProduct = this.dropdownOptions.find(option => option.id === newVal);
-      if (selectedProduct) {
-        this.form.brand_id = selectedProduct.brand_id;
-      }
-    }
-  }
 };
 </script>

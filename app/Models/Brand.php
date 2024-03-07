@@ -17,6 +17,24 @@ class Brand extends Model
         'status'
     ];
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($brand) {
+            $brand->products()->each(function ($product) {
+                $product->product_parts()->delete();
+            });
+
+            $brand->products()->delete();
+        });
+    }
+
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
+
     // protected $appends = [
     //     'created_date'
     // ];
